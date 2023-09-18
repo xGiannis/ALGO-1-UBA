@@ -332,16 +332,28 @@ multiplosDeN n (x:xs) | mod x n == 0 = x: multiplosDeN n xs
 
 {--9. ordenar :: [Integer] -> [Integer] que ordena los elementos de la lista en forma creciente.
 --}
-ordenar :: [Integer] -> [Integer]
+{- ordenar :: [Integer] -> [Integer]
 ordenar [] = []
 ordenar [x] = [x]
-ordenar (x:y:xs) | decimeSiEsElMasChico(x:y:xs) = x: ordenar (y:xs)
-                 | otherwise = ordenar (y:xs)  -- NO LO HICE
+ordenar (x:y:xs) | decimeSiEsElMasChico(x:y:xs) = x:ordenar(y:xs)
+                 | otherwise = ponerEnPosicion(x:y:xs)                          -- ORDENAR 2 ES MUHCO MEJOR
+
+ponerEnPosicion :: [Integer] -> [Integer]
+ponerEnPosicion (x:y:xs)| decimeSiEsElMasChico(y:xs) = y:ordenar(x:xs)
+                        | otherwise = ponerEnPosicion ((y:xs) ++ [x]) -}
+ 
 --
 decimeSiEsElMasChico :: [Integer] -> Bool
 decimeSiEsElMasChico [] = True
 decimeSiEsElMasChico [x] = True
-decimeSiEsElMasChico (x:y:xs) = x<y && decimeSiEsElMasChico (x:xs)
+decimeSiEsElMasChico (x:y:xs) = x<=y && decimeSiEsElMasChico (x:xs) 
+
+
+ordenar2 :: [Integer] -> [Integer]
+ordenar2 [] = []
+ordenar2 [x] = [x]
+ordenar2 (x:y:xs) | decimeSiEsElMasChico(x:y:xs) = x:ordenar2(y:xs)
+                  | otherwise = ordenar2((y:xs) ++ [x])-- JASJAJSJASSA ESTE ES MUCHO MEJOR 
 
 
 
