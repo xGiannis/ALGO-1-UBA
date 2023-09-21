@@ -67,11 +67,6 @@ diferenteATodosELem (p1:p2:xs) = p1/= p2 && diferenteATodosELem(p1:xs)
 
 
 -- $$$$$$$$$$$$$$$$$$$$$$$$SIGUIENTE$$$$$$$$$$$$$$$$$$$$$
-{-problema personas (relaciones: seq⟨String × String⟩) : seq⟨String⟩ {
-    requiere: {relacionesValidas(relaciones)}
-    asegura: {resu tiene exactamente los elementos que figuran en alguna tupla de relaciones en cualquiera de las dos
-            posiciones, sin repetir}
-}-}
 
 
 {-problema amigosDe (persona: String, relaciones: seq⟨String × String⟩) : seq⟨String⟩ {
@@ -92,4 +87,38 @@ pertenece persona (man1,man2) = persona == man1 || persona == man2
 devolverNoPersona::String -> (String,String) -> String
 devolverNoPersona persona (man1,man2) | persona == man1 = man2
                                       | otherwise = man1  
+
+-- $$$$$$$$$$$$$$$$$$$$$$$$SIGUIENTE$$$$$$$$$$$$$$$$$$$$$
+
+{-problema personaConMasAmigos (relaciones: seq⟨String × String⟩) : String {
+    requiere: {relaciones no vacıa}
+    requiere: {relacionesV alidas(relaciones)}
+    asegura: {resu es el Strings que aparece mas veces en las tuplas de relaciones (o alguno de ellos si hay empate)}
+}-}
+
+--max(contadorDeNombres (fst x) (x:y:xs), contadorDeNombres (snd x) (x:y:xs), personaConMasAmigos(y:xs))
+
+personaConMasAmigos :: [(String,String)] -> String -- ME DEVUELVE EL NOMBRE MAS REPETIDO
+personaConMasAmigos [] = ""
+personaConMasAmigos[x] = fst x -- tal como podria ser snd, seguramente tenga q revisar esto mas adelante/.
+personaConMasAmigos (x:xs)  = apareceMas (x:xs)
+ 
+
+
+apareceMas :: [(String,String)] -> String  --APARECE MAS ES PERSONACONMASAMIGOS ES LO MISMO. APARECEMAS TERMINO SIENDO EL CODIG PRINCIPAL
+apareceMas [x] = fst x  -- aca podria ir fst x idk
+apareceMas (x:xs)   | compararConRestoDeLista (x:xs) = fst x
+                    | otherwise = apareceMas( xs ++ [darVuelta x] )          
+
+
+contadorDeNombres :: String ->[(String,String)] -> Int
+contadorDeNombres _ [] = 0
+contadorDeNombres nombre (x:xs) |  nombre `pertenece` x = 1 + contadorDeNombres nombre xs
+                                | otherwise = contadorDeNombres nombre xs
+
+
+compararConRestoDeLista :: [(String,String)] -> Bool
+compararConRestoDeLista [x] = True
+compararConRestoDeLista (x:y:xs) = contadorDeNombres (fst x) (x:y:xs) >= contadorDeNombres (fst y) (x:y:xs) && contadorDeNombres (fst x) (x:y:xs) >= 
+                                                                        contadorDeNombres (snd y) (x:y:xs) && compararConRestoDeLista (x:xs)
 
