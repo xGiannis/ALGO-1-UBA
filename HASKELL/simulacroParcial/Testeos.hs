@@ -1,7 +1,7 @@
 import Test.HUnit
 import Solucion
 import Solucion (relacionesValidas, amigosDe, personaConMasAmigos)
- -- USADO COMO BLOC DE NOTAS, EL CODIGO DE ACA NO SIRVE SI NO MAS PARA ESCRIBIR CUALQUIER COSA
+
 
 
 {-problema relacionesValidas (relaciones: seq⟨String × String⟩) : Bool {
@@ -72,7 +72,9 @@ testpersonaConMasAmigos= test[
                     " personaConMasAmigos: 2 relaciones, 1 solo max" ~: (personaConMasAmigos [relacion1_2, relacion1_3]) ~?= usuario1,
                     " personasConMasAmigos: 3 relaciones, 2 max" ~: personaConMasAmigos [("Gian","Souto"),("Gian","Kun Aguero"),("Souto","Peron")] ~?= "Gian", -- ACA PONER GIAN O SOUTO
                     " personasConMasAmigos: 3 relaciones, 2 max" ~: personaConMasAmigos [("Souto","Gian"),("Gian","Kun Aguero"),("Souto","Peron")] ~?= "Souto",
-                    " personasConMasAmigos: 3 relaciones, 1 max" ~: personaConMasAmigos [("Souto","Gian"),("Peron","Kun Aguero"),("Bullrich","Gian")] ~?= "Gian"
+                    " personasConMasAmigos: 3 relaciones, 1 max" ~: personaConMasAmigos [("Souto","Gian"),("Peron","Kun Aguero"),("Bullrich","Gian")] ~?= "Gian",
+                    " personasConMasAmigos: 3 relaciones, 1 max (pero cerca)" ~: personaConMasAmigos [("Souto","Gian"),("Peron","Kun Aguero"),("Peron","Goku"),
+                    ("Bullrich","Gian"),("Jose","Gian"),("Jorge","Gian")] ~?= "Gian"
                      ]
 
 

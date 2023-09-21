@@ -107,7 +107,8 @@ personaConMasAmigos (x:xs)  = apareceMas (x:xs)
 
 apareceMas :: [(String,String)] -> String  --APARECE MAS ES PERSONACONMASAMIGOS ES LO MISMO. APARECEMAS TERMINO SIENDO EL CODIG PRINCIPAL
 apareceMas [x] = fst x  -- aca podria ir fst x idk
-apareceMas (x:xs)   | compararConRestoDeLista (x:xs) = fst x
+apareceMas (x:xs) 
+                    | compararConRestoDeLista (x:xs) = fst x
                     | otherwise = apareceMas( xs ++ [darVuelta x] )          
 
 
@@ -119,6 +120,8 @@ contadorDeNombres nombre (x:xs) |  nombre `pertenece` x = 1 + contadorDeNombres 
 
 compararConRestoDeLista :: [(String,String)] -> Bool
 compararConRestoDeLista [x] = True
-compararConRestoDeLista (x:y:xs) = contadorDeNombres (fst x) (x:y:xs) >= contadorDeNombres (fst y) (x:y:xs) && contadorDeNombres (fst x) (x:y:xs) >= 
-                                                                        contadorDeNombres (snd y) (x:y:xs) && compararConRestoDeLista (x:xs)
+compararConRestoDeLista (x:y:xs) =     contadorDeNombres (fst x) (x:y:xs) >= contadorDeNombres (fst y) (x:y:xs)
+                                    && contadorDeNombres (fst x) (x:y:xs) >=  contadorDeNombres (snd y) (x:y:xs) 
+                                    && contadorDeNombres (fst x) (x:y:xs) >= contadorDeNombres (snd x) (x:y:xs) --tal vez esta linea deberia ir primero xd
+                                    && compararConRestoDeLista (x:xs)
 
