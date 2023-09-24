@@ -1,4 +1,7 @@
+{-# OPTIONS_GHC -Wno-unrecognised-pragmas #-}
+{-# HLINT ignore "Use map" #-}
 import Data.Type.Equality (TestEquality(testEquality))
+
 {--
 VEO QUE 0:[1,2,3] = [0,1,2,3]. LO SUMO A LA LISTA
 POR OTRO LADO, [1,2,3] ++ [0] = [1,2,3,0]. CONCATENA LISTAS
@@ -416,4 +419,125 @@ cuentePalabras (x:xs) | x == ' ' = 1 + cuentePalabras xs
 -- palabras :: [Char] -> [[Char]], que dada una lista arma una nueva lista con las palabras de la lista original
 palabras :: [Char] -> [[Char]]
 palabras [] = []
+palabras l = agregarPalabras(sacarEspacioInicioFin(sacarBlancosRepetidos l ))
 
+
+
+agregarPalabras :: [Char] -> [[Char]]
+agregarPalabras [] = []
+agregarPalabras l = [crearListaDeUnaPalabra l] ++ agregarPalabras (sacarPalabraAnterior l)
+
+
+sacarPalabraAnterior :: [Char] -> [Char]
+sacarPalabraAnterior [] = []
+sacarPalabraAnterior (x:xs) | x==' ' = xs
+                            | otherwise = sacarPalabraAnterior xs
+
+crearListaDeUnaPalabra :: [Char] -> [Char]    
+crearListaDeUnaPalabra [] = []
+crearListaDeUnaPalabra (x:xs)| x==' ' = []
+                             | otherwise = x:crearListaDeUnaPalabra xs
+
+testo= palabras "AGUANTA SAN LO REEE" == ["AGUANTA","SAN","LO","REEE"]
+
+
+
+--4. palabraMasLarga :: [Char] -> [Char], que dada una lista de caracteres devuelve su palabra m´as larga.
+
+
+palabraMasLarga :: [Char] -> [Char]
+palabraMasLarga [] = []
+palabraMasLarga oracion = medirPalabras(palabras oracion)
+
+medirPalabras:: [[Char]] -> [Char]
+medirPalabras [] = []
+medirPalabras (x:xs) | mayorQueTodos (x:xs) = x
+                     | otherwise = medirPalabras xs       
+
+mayorQueTodos :: [[Char]] -> Bool
+mayorQueTodos [x] = True
+mayorQueTodos (x:y:xs) = longitud x >= longitud y && mayorQueTodos (x:xs)
+
+
+--aplanar :: [[Char]] -> [Char], que a partir de una lista de palabras arma una lista de caracteres concatenandolas.
+aplanar :: [[Char]] -> [Char]
+aplanar [] = []
+aplanar (palabra:xs) = meterEnLista palabra ++ aplanar xs
+
+meterEnLista :: [Char] -> [Char]
+meterEnLista [] = []
+meterEnLista (letra:xs) = letra:meterEnLista xs
+
+ 
+--aplanarConBlancos :: [[Char]] -> [Char], que a partir de una lista de palabras, arma una lista de caracteres concatenandolas e insertando un blanco entre cada palabra.
+
+aplanarConBlancos :: [[Char]] -> [Char]
+aplanarConBlancos [] = []
+aplanarConBlancos (palabra:xs) = meterEnLista palabra ++[' ']++ aplanarConBlancos xs
+
+
+
+--7. aplanarConNBlancos :: [[Char]] -> Integer -> [Char], que a partir de una lista de palabras y un entero n,
+--arma una lista de caracteres concate´andolas e insertando n blancos entre cada palabra (n debe ser no negativo).
+
+aplanarConNBlancos :: [[Char]] -> Integer -> [Char]
+aplanarConNBlancos [] _ = []
+aplanarConNBlancos (palabra:xs) n = meterEnLista palabra ++cuantosBlancos n++ aplanarConNBlancos xs n
+
+cuantosBlancos :: Integer -> [Char]
+cuantosBlancos 0 = []
+cuantosBlancos n = ' ': cuantosBlancos (n-1)
+
+
+--)$$$$$$$$$$$$$$$$$$$$$$$$$$     Ejercicio 5.    $$$$$$$$$$$$$$$$$$$$$$$$$$--
+{-- Definir las siguientes funciones sobre listas: 
+--}
+
+{-1. sumaAcumulada :: (Num t) => [t] -> [t] seg´un la siguiente especificaci´on:
+problema sumaAcumulada (s: seq⟨T⟩) : seq⟨T⟩ {
+        requiere: {T ∈ [N, Z, R]}
+        asegura: {|s| = |resultado| ∧ el valor en la posici´on i de resultado es Pi k=0 s[k]}
+}
+Por ejemplo sumaAcumulada [1, 2, 3, 4, 5] es [1, 3, 6, 10, 15].-}
+
+funcionaver :: (Ord a, Num a) => a -> a -> a
+funcionaver x y | x==y && x>y = x+3
+
+
+
+sumaAcumulada:: Num t => [t] -> [t]
+sumaAcumulada [] = []
+sumaAcumulada[x]= [x]
+sumaAcumulada (x:y:xs) = x:sumaAcumulada(x+y:xs)
+
+
+
+{-2. descomponerEnPrimos :: [Integer] -> [[Integer]] segun la siguiente especificaci´on:
+problema descomponerEnPrimos (s: seq⟨Z⟩) : seq⟨seq⟨Z⟩⟩ {
+requiere: { Todos los elementos de s son mayores a 2 }
+        asegura: { |resultado| = |s| }
+        asegura: {todos los valores en las listas de resultado son n´umeros primos}
+        asegura: {multiplicar todos los elementos en la lista en la posici´on i de resultado es igual al valor en la posici´on
+                        i de s}
+}
+Por ejemplo descomponerEnPrimos [2, 10, 6] es [[2], [2, 5], [2, 3]].-}
+
+descomponerEnPrimos :: [Integer] -> [[Integer]] 
+descomponerEnPrimos [] = []
+descomponerEnPrimos (x:xs) = [descomposicionEnPrimos x 2] ++ descomponerEnPrimos xs
+
+descomposicionEnPrimos :: Integer-> Integer-> [Integer]
+descomposicionEnPrimos x n| mod x n == 0 && esPrimo n = n:descomposicionEnPrimos x (n+1)                        
+                          | n > x = []                        
+                          | otherwise = descomposicionEnPrimos x (n+1)
+
+esPrimo :: Integer -> Bool
+esPrimo n = menorDivisor n == n 
+
+menorDivisor :: Integer ->Integer
+menorDivisor n | n==1 = 1 
+               | otherwise= menorDivisorAux n 2
+
+menorDivisorAux :: Integer -> Integer -> Integer 
+menorDivisorAux n y | mod n y == 0 = y
+                    | otherwise = menorDivisorAux n (y+1)
