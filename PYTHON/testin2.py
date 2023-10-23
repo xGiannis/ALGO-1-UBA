@@ -58,6 +58,9 @@ palindromedo("hola aloh")
 palindromedo("que dizex")
 print("")
 
+
+
+text="patocuack"
 #EJERCICIO 7
 seguridad("pato")
 seguridad("patocuack1")
@@ -87,3 +90,55 @@ paresPor0IN(listaINT)
 print(paresPor0IN(listaINT))
 print(listaINT)
 print("")
+print("")
+
+sinVocales(text)
+print("")
+
+reemplazaVocales(text)
+print("")
+
+daVueltaStr(text)
+print("it should say",text[::-1])
+print("")
+
+eliminarRepetidos("pattoccuack")
+print("")
+
+aprobado([4,4,4])
+aprobado([7,7,7])
+aprobado([7,5,3])
+aprobado([8,5,4])
+print("")
+
+
+
+#EJERCICIO 4 (HAY INPUTS ASI Q DESPUES DE TESTEAR LOS COMENTO)
+#nombresEstudiantes()
+
+#sube()
+
+#sieteYmedio()
+
+
+#EJERCICIO 5
+listaListas=[listaNoOrd,lista,listaPar]
+
+#perteneceACadauno(listaListas,1)
+
+matriz=[[1,2],[1,5],[3,4]]
+notmatriz=[[1,2,3],[21,2],[1,5]]
+matriz3X3=[[5,5,1],[1,1,1],[9,5,1]]
+
+esMatriz(matriz)
+esMatriz(notmatriz)
+esMatriz(matriz3X3)
+print("")
+
+filasOrdenadas(matriz)
+filasOrdenadas(matriz3X3)
+
+
+
+
+
