@@ -11,7 +11,7 @@ def pilaOrdHasta(hasta:int):
 def pilaOrdHastaDesord(hasta:int):
     pila=Pila()
     for i in range(hasta):
-        num=random.randrange(0,hasta)
+        num=random.randint(0,10)
 
         pila.put(num)
     return pila
@@ -23,12 +23,25 @@ p.put(5)
 p.put(4)
 
 
+sampleText="textoEjemplo.txt"
+textomodificable="textoejemplo2.txt"
+
 pilaOrd=pilaOrdHasta(10)
 pilaDesord=pilaOrdHastaDesord(10)
 
-buscarElMaximo(pilaOrd)
-buscarElMaximo(pilaDesord)
+#buscarElMaximo(pilaOrd)
+#buscarElMaximo(pilaDesord)
 
-agruparPorLongitud("textoEjemplo.txt")
+#agruparPorLongitud("textoEjemplo.txt")
+
+
+#contarLineas("textoEjemplo.txt")
+#reverso(sampleText)
+
+#agregarFrase(textomodificable,"Las abuelas de plaza de mayo\nExijen libertad!")
+
+agregarFrasePrincipio(textomodificable,"In the beggining...\n")
+
+
 
 

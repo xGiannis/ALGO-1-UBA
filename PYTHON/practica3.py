@@ -3,12 +3,31 @@ from queue import LifoQueue as Pila
 
 #Ejercicio 1. Implementar en Python:
 
-"""1. Una funci´on contarLineas(in nombre archivo : str) → int que cuenta y devuelva la cantidad de l´ıneas de texto del
+"""1. Una funcion contarLineas(in nombre archivo : str) → int que cuenta y devuelva la cantidad de l´ıneas de texto del
 archivo dado"""
 
+def contarLineas(archivo:str)->int:
+    archivo=open(archivo,"r")
+
+    lineas:list=archivo.readlines()
+    archivo.close()
+    cantLineas:int=0
+  
+    for i in lineas:
+        cantLineas=cantLineas+1
+    print(cantLineas)
+    return cantLineas
 
 
-#%%%%%%%%%%%%%%%%TRABAJO EN CLASE%%%%%%%%%%%%%%%%%%%:
+
+
+
+
+
+
+
+
+##$$$$$$$$$$$$$$$$$TRABAJO EN CLASE$$$$$$$$$$$:
 """jercicio 2
 Dado un archivo de texto con comentarios, implementar una
 funci´on clonarSinComentarios(in nombre archivo : str) que
@@ -136,4 +155,215 @@ def agruparPorLongitud(nombreArchivo:str)->dict:
 
 
 
-#%%%%%%%%%%%%%%%%TRABAJO EN CLASE%%%%%%%%%%%%%%%%%%%:
+#$$$$$$$$$$$$$$$$$TRABAJO EN CLASE$$$$$$$$$$$:
+
+
+"""Ejercicio 3. Dado un archivo de texto, implementar una funci´on que escribe un archivo nuevo llemado reverso.txt que tiene
+las mismas l´ıneas que el original, pero en el orden inverso.
+Ejemplo: si el archivo original es
+
+Esta es la primera linea .
+Y esta es la segunda .
+
+debe generar:
+
+Y esta es la segunda .
+Esta es la primera linea .
+"""
+
+
+
+def reverso(file):
+
+
+    archivo=open(file,"r")
+    lineas1=archivo.readlines()
+    archivo.close()
+
+    reversofile=open("reverso.txt","w")
+    print(lineas1)                         #VEO Q LA ULTIMA ORACION NO TIENE SALTO DE LINEA, ASI QUE METERLE A LA PRIMERA UN +\N
+
+    for i in range(len(lineas1)):
+        
+        bkwrdsLineas=lineas1[len(lineas1)-1-i]
+        if i==0:
+            reversofile.write(bkwrdsLineas+"\n")
+        elif i==len(lineas1)-1:
+        
+            bkwrdsLineas=sacarBarraN(bkwrdsLineas)
+
+            reversofile.write(bkwrdsLineas)
+            
+        else:
+            reversofile.write(bkwrdsLineas)
+    archivo.close()
+    reversofile.close()
+#Medio q se me enquilombo. voy a intnetar usar readline()
+
+def sacarBarraN(texto:str):
+    textoreemplazo=""
+    for i in range(len(texto)):
+        if not(texto[i]== "\n"):
+            textoreemplazo += texto[i]
+        else:
+            break
+    print(textoreemplazo)
+    return textoreemplazo
+
+
+"""Ejercicio 4. Dado un archivo de texto y una frase, implementar una funci´on que la agregue al final del archivo original (sin
+hacer una copia).
+"""
+
+def agregarFrase(file,frase:str):
+    archivo=open(file,"a")
+    archivo.write(frase)
+    archivo.close()
+
+"""Ejercicio 5. idem, pero agregando la frase al comienzo del archivo original (de nuevo, sin hacer una copia del archivo)."""
+
+
+def agregarFrasePrincipio(file,frase:str):      #PARA ESTE PROBLEMA SE PODRIA USAR PUNTERO, PERO NO LO VIMOS. PREGUNTAR
+    archivo=open(file,"r")
+    lineasOriginales=archivo.readlines()
+    archivo.close()
+
+    nuevasLineas=[]
+    nuevasLineas.append(frase)
+    for i in lineasOriginales:
+        nuevasLineas.append(i)
+
+
+    archivo=open(file,"w")
+    for linea in nuevasLineas:
+        archivo.write(linea)
+    
+"""Ejercicio 6. Implementar una funci´on que lea un archivo en modo binario y devuelva la lista de palabras legibles, donde vamos
+a definir una palabra legible como:
+secuencias de texto formadas por numeros, letras mayusculas/minusculas y los caracteres ‘ ’(espacio) y ‘ ’(gui´on bajo)
+que tienen longitud >= 5
+
+Una vez implementada la funci´on, probarla con diferentes archivos binarios (.exe, .zip, .wav, .mp3, etc).
+Referencia: https://docs.python.org/es/3/library/functions.html#open
+Para resolver este ejercicio se puede abrir un archivo en modo binario ‘b’. Al hacer read() vamos a obtener
+una secuencia de bytes, que al hacer chr(byte) nos va a devolver un caracter correspondiente al byte
+le´ıdo.
+"""
+
+def leerPalabrasLegibles(nombreArchivo:str):
+    res=[]
+    archivo= open(nombreArchivo,"rb")
+    contenido = archivo.read()
+
+    texto = contenido.decode("utf-8", errors="ignore") #decodear el texto
+    
+    
+
+    palabras= texto.split()
+
+
+    for palabra in palabras:
+        if esValida(palabra) and len(palabra)>=5:
+            res.append(palabra)
+    archivo.close()
+    print(res)
+    return res
+
+
+def esValida(palabra:str) -> bool: #ver q no cuenta los _ ni los ? ni las . , etc. Arreglarlo
+    res=True
+
+    for i in range(len(palabra)):
+        if palabra[i] not in [1,2,3,4,5,6,7,8,9]:
+            if  not('a' <= palabra[i] <= 'z'):
+                if not('A' <= palabra[i] <= 'Z'):
+                    if not palabra[i]==" " and not palabra[i]=="_":
+                        res=False
+
+
+
+    return res
+#palabrasLegiblesBinario("textoEjemplo.txt")
+#VER 8 Y 9
+
+
+leerPalabrasLegibles("textobinario.txt")
+#preguntar              FUNCIONA PARA TEXTO NORMAL, NOT BINARIO PONELEEEEEEE
+
+
+"""Ejercicio 7. Implementar una funci´on que lea un archivo de texto separado por comas (comma-separated values, o .csv) que
+contiene las notas de toda la carrera de un grupo de alumnos y calcule el promedio final de un alumno dado. La funci´on
+promedioEstudiante(in lu : str) → float. El archivo tiene el siguiente formato:
+nro de LU ( str ) , materia ( str ) , fecha ( str ) , nota ( float )
+"""
+
+
+
+
+def promedioEstudiante(lu : str) -> float:
+    
+    archivo=open("notas.csv","r")
+
+    notasPosta=archivo.readlines()
+
+    print(notasPosta)
+    sumadenotas=0
+    cantnotas=0
+    notas=[]
+    #ESTA LINEA ME DESTRUYE PERO ES NECESARIA
+    for i in range(len(notasPosta)):
+        notas.append(sacarBarraN(notasPosta[i]))
+    #ESTA LINEA ME DESTRUYE PERO ES NECESARIA
+
+    print(notas)
+    for nota in notas:
+        
+        esLu=True
+        cantcomas=0
+        primerComa=False
+        for i in range(len(nota)): #MENOS 1 EVITA SALTO DE LINEA PERO LA ULTIMA LINEA NO TIENE, LA PUTA MADREEEEEEEEEEEEE
+            
+            if esLu:
+
+                if nota[i]!=",":
+                    if not primerComa:
+                        if nota[i]!=lu[i]:
+                            esLu=False
+                else:
+                    cantcomas+=1 
+                    primerComa=True
+            
+                if len(nota)-1==i:
+                    cantnotas+=1
+                    print(nota[i-1])
+                    if nota[i-1]==",":
+                        sumadenotas+=int(nota[i])
+                    else:
+                        sumadenotas+=10
+
+
+
+
+        
+
+
+    print(cantnotas)
+    print(sumadenotas)
+    promedio=sumadenotas/cantnotas
+    print(promedio)
+    return promedio
+
+promedioEstudiante("825/22")
+
+
+
+
+
+
+
+
+
+
+
+
+
