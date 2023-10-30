@@ -373,27 +373,44 @@ asumir que el monedero comienza en cero. Para guardar la informaci´on grabaremo
 los casos de cargar (“C”, monto a cargar) y descontar cr´edito (“D”, monto a descontar).
 """
 
-def sube()->list:
+"""def sube()->list:
 
     carga:int=0
     historial:list=[]
+
+    cargas=("C",car)
+    descargas=("D",des)
+
+
     operacion:str=""
     while operacion!="X":
         operacion=input("C para cargar, D para descontar, X para finalizar: \n")
         if operacion=="C" or operacion=="D":
             cargarSube(historial,operacion)
+
+    historial.append(carga)
+
+        
     print(historial)
     return historial
 
 def cargarSube(historial:list,operacion:str):
+
+
+    car=0
+    des=0
+
     credito:int=0
     if operacion=="C":
         credito=int(input("cuanto cargas broderick: "))
+        car+=credito
         historial=historial.append(credito)
     else:
         credito=int(input("cuanto descargas broderick: "))
+        des-=credito
         historial=historial.append(-credito)
 
+"""
 
 
 """3. Vamos a escribir un programa para simular el juego conocido como 7 y medio. El mismo deber´a generar un n´umero

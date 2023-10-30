@@ -667,26 +667,25 @@ jugadas de ese bolillero que se necesitan para ganar.
 def secuenciaBingo():
     cola=Cola()
     numeros=[]
-    a=0
+
     for i in range(0,100): #PRUEBO CON 10 PRIMERO
         num=random.randint(0,99)
         while num in numeros:
             num=random.randint(0,99) #TAL VEZ ESTO TARDE AÑOS
         numeros.append(num)
-        a=a+1
+
 
 
 
         cola.put(num)
 
-    print(a)
     print("")
     return cola
 
 print("\n\n\n")
 
 
-def jugarCartonBingo(carton:list[int],bolillero:Cola[int]): #carton tiene 15 numeros
+def jugarCartonBingo(carton:list,bolillero:Cola): #carton tiene 15 numeros
     jugada=0
     print(len(carton))
     fichascarton=15
@@ -751,4 +750,4 @@ def promedioEstudiante2LIBRETAPOSTA():
     print(d)
     return d
         
-promedioEstudiante2LIBRETAPOSTA()
+#promedioEstudiante2LIBRETAPOSTA()

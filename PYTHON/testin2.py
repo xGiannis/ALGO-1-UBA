@@ -116,7 +116,7 @@ print("")
 #EJERCICIO 4 (HAY INPUTS ASI Q DESPUES DE TESTEAR LOS COMENTO)
 #nombresEstudiantes()
 
-#sube()
+sube()
 
 #sieteYmedio()
 
@@ -135,8 +135,8 @@ esMatriz(notmatriz)
 esMatriz(matriz3X3)
 print("")
 
-filasOrdenadas(matriz)
-filasOrdenadas(matriz3X3)
+#filasOrdenadas(matriz)
+#filasOrdenadas(matriz3X3)
 
 
 
