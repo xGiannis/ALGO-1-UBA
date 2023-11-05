@@ -545,9 +545,24 @@ def crearYelevar(d:int,p:int): #D ES TAMAÑANO, P ES ELEVADO A LA CUANTO
     m = np.random.randint(0,10, (d, d))
     print("Esta es la matriz no elevada: ")
     print(m)
-    mElevada=m**p
+    mElevada=m**p       
     print("Esta es la matriz elevada: ")
     print(mElevada)
+
+    
+
+"""def crearYelevar(d:int,p:int): #D ES TAMAÑANO, P ES ELEVADO A LA CUANTO
+    m = np.random.randint(0,10, (d, d))
+    print("Esta es la matriz no elevada: ")
+    print(m)
+    for i in range(p):
+        for linea in m:
+            for numero in linea: 
+
+
+    print("Esta es la matriz elevada: ")
+    print(mElevada)"""
+
 
 crearYelevar(2,2) #Cuando voy elevando los valores arranca a hacer cuaqlueri cosa
 

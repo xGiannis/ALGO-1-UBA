@@ -432,7 +432,6 @@ def cantidadElementos(p:Pila) ->int:
         p.put(i)
 
 
-    print(p==pinicial)
 
     print(size)
     return size
@@ -711,6 +710,57 @@ Implementar la funci´on n pacientes urgentes(in c : Cola[(int, str, str)]) → 
 la cola que tienen prioridad en el rango [1, 3]."""
 #PONGO EN PAUSA COLA PARA REPASAR BIBLIOTECAS
 
+pacientes=Cola() #tendra una lista adentro
+
+quebrado=[3,"Estevan","Quiropractico"]
+muela=[6,"Luck","Odontologo"]
+apendice=[1,"Juan","Cirugia"]
+
+pacientes.put(quebrado)
+pacientes.put(muela)
+pacientes.put(apendice)
+
+
+def n_pacientes_urgentes(c:Cola)->int:
+    res:int=0
+    lisat=[]
+    while not c.empty():
+        paciente:list=c.get()
+        urgencia:int=paciente[0]
+        if urgencia <=3:
+            res+=1
+        lisat.append(paciente)
+    
+    for i in lisat:
+        c.put(i)
+    
+    print(res) #should get 2
+    return res
+
+print("Pacientes urgentes:")
+n_pacientes_urgentes(pacientes)
+print("Pacientes urgentes arriba!\n")
+    
+
+
+
+
+
+"""Ejercicio 18. La gerencia de un banco nos pide modelar la atenci´on de los clientes usando una cola donde se van registrando
+los pedidos de atenci´on. Cada vez que ingresa una persona a la entidad, debe completar sus datos en una pantalla que est´a a la
+entrada: Nombre y Apellido, DNI, tipo de cuenta (si es preferencial o no) y si tiene prioridad por ser adulto +65, embarazada o
+con movilidad reducida (prioridad si o no).
+La atenci´on a los clientes se da por el siguiente orden: primero las personas que tienen prioridad, luego las que tienen cuenta
+bancaria preferencial y por ´ultimo el resto. Dentro de cada subgrupo de clientes, se respeta el orden de llegada.
+1. Dar una especificaci´on para el problema planteado.
+2. Implementar en Python la funci´on a clientes(in c : Cola[(str, int, bool, bool)]) → Cola[(str, int, bool, bool)] que dada la cola de ingreso
+ de clientes al banco devuelve la cola en la que van a ser atendidos.
+"""
+
+
+
+
+
 
 
 
@@ -751,3 +801,197 @@ def promedioEstudiante2LIBRETAPOSTA():
     return d
         
 #promedioEstudiante2LIBRETAPOSTA()
+
+"""Ejercicio 21. Implementar la funci´on la palabra mas frecuente(in nombre archivo : str) → str que devuelve la palabra
+que m´as veces aparece en un archivo de texto. Se aconseja utilizar un diccionario de palabras para resolver el problema.
+"""
+
+def palabraMasFrecuente(nombreArchivo:str)->str:
+    archivo=open(nombreArchivo,"r")
+
+    texto:str=archivo.read()
+
+
+    parrafo:list=texto.split("\n")
+    d={}
+
+    for linea in parrafo:
+        palabras=linea.split(" ")
+        for i in palabras:
+            if i not in d:
+                d[i]=1
+            else:
+                d[i]+=1
+        llave:str=palabras[0]
+
+        
+    print(llave)
+    
+
+    for key in d:
+        if d[llave]<d[key]:
+            llave=key
+
+    print(llave)
+    return llave
+
+
+palabraMasFrecuente("repetirPalabras.txt")
+
+
+
+#Ejercicio 22. Nos piden desarrollar un navegador web muy simple que debe llevar un registro de los sitios web visitados por los
+#usuarios del sistema. El navegador debe permitir al usuario navegar hacia atr´as y hacia adelante en la historia de navegaci´on.
+
+
+"""1. Crea un diccionario llamado historiales que almacenar´a el historial de navegaci´on para cada usuario. Las claves del
+diccionario ser´an los nombres de usuario y los valores ser´an pilas.
+"""
+
+
+historiales:dict={}
+
+sitioEstoy=""
+
+"""
+2. Implementa una funci´on llamada visitar sitio(historiales, usuario, sitio) que reciba el diccionario de historiales,
+el nombre de usuario y el sitio web visitado. La funci´on debe agregar el sitio web al historial del usuario correspondiente.
+3. Implementa una funci´on llamada navegar atras(historiales, usuario) que permita al usuario navegar hacia atr´as en
+la historia de navegaci´on. Esto implica sacar el sitio web m´as reciente del historial del usuario.
+4. Implementa una funci´on llamada navegar adelante(historiales, usuario) que permita al usuario navegar hacia adelante en la historia de navegaci´on. Esto implica volver a agregar el sitio web previamente sacado.
+Ejemplo de uso:
+historiales = {}
+visitar_sitio(historiales, "Usuario1", "google.com")
+visitar_sitio(historiales, "Usuario1", "facebook.com")
+navegar_atras(historiales, "Usuario1")
+visitar_sitio(historiales, "Usuario2", "youtube.com")
+navegar_adelante(historiales, "Usuario1")
+"""
+
+def visitar_sitio(historiales:dict,usuario:str,sitio:str):   #Se van almacenar en historiales como pilas
+
+    if usuario not in historiales:
+        sitiosWeb=Pila()
+        sitiosWeb.put(sitio)
+        historiales[usuario]=sitiosWeb
+        print(historiales)
+
+
+    else:
+        sitioTo=historiales[usuario]
+        sitioTo.put(sitio)
+
+print("")
+def navegar_atras(historiales:dict,usuario:str):
+    if usuario not in historiales:
+        print("Este usuario no visito ningun sitio web")
+    else:
+        sitioVisitado=historiales[usuario]
+        sitioEstoy=sitioVisitado.get()
+        historiales["Visitado"+str(usuario)]=sitioEstoy
+
+
+    print(sitioEstoy)
+
+historiales.clear()
+
+
+
+def navegar_adelante(historiales:dict,usuario:str):
+
+    if usuario not in historiales:
+        print("Este usuario no visito ningun sitio web")
+    else:
+        sitioTo=historiales[usuario]
+        sitioVisitado=historiales["Visitado"+str(usuario)]
+        sitioTo.put(sitioTo.put(sitioVisitado))
+
+
+"""visitar_sitio(historiales, "Usuario1", "google.com")
+visitar_sitio(historiales, "Usuario1", "facebook.com")
+navegar_atras(historiales, "Usuario1")
+
+visitar_sitio(historiales, "Usuario2", "youtube.com")
+
+navegar_adelante(historiales, "Usuario1")
+
+
+print("final result:")
+print(historiales)
+print("")
+"""
+
+
+
+"""Ejercicio 23. Nos piden desarrollar un sistema de gesti´on de inventario para una tienda de ropa. Este sistema permite llevar
+un registro de los productos en el inventario y realizar operaciones como agregar nuevos productos, actualizar las existencias y
+calcular el valor total del inventario.
+Para resolver este problema vamos a utilizar un diccionario llamado inventario que almacene informaci´on sobre los productos.
+Cada elemento del diccionario debe tener el nombre del producto como clave y otro diccionario con informaci´on adicional (nombre,
+precio y cantidad) como valor.
+1. Implementa una funci´on llamada agregar producto(inventario, nombre, precio, cantidad) que permita agregar un
+nuevo producto al inventario. El nombre del producto debe ser la clave del diccionario, y el valor debe ser otro diccionario
+con las claves “precio” y “cantidad”. Como precondici´on de esta funci´on se requiere que el producto a agregar no est´e en
+el inventario.
+2. Implementa una funci´on llamada actualizar stock(inventario, nombre, cantidad) que permita actualizar la cantidad
+de un producto existente en el inventario.
+3. Implementa una funci´on llamada actualizar precios(inventario, nombre, precio) que permita actualizar el precio
+de un producto existente en el inventario.
+4. Implementa una funci´on llamada calcular valor inventario(inventario) que calcule el valor total del inventario multiplicando el precio por la cantidad de cada producto y sumando los valores de todos los productos.
+Ejemplo de uso:
+inventario = {}
+agregar_producto(inventario, "Camisa", 20.0, 50)
+agregar_producto(inventario, "Pantal´on", 30.0, 30)
+actualizar_existencias(inventario, "Camisa", 10)
+valor_total = calcular_valor_inventario(inventario)
+print("Valor total del inventario:", valor_total) # Deber´ıa imprimir 1300.00
+"""
+
+inventario={}
+
+def agregar_producto(inventario:dict,nombre:str,precio:float,cantidad:int):
+    caracter={"precio":precio,"cantidad":cantidad}
+
+    inventario[nombre]=caracter
+
+    print(inventario)
+
+def actualizar_stock(inventario,nombre,cantidad): #ACTUALIZA LA CANTIDAD DE UN PRODUCTO
+    stock=inventario[nombre]
+    stock["cantidad"]=cantidad
+
+    print(inventario)
+
+def actualizar_precios(inventario,nombre,precio): #ACTUALIZA LA CANTIDAD DE UN PRODUCTO
+    precios=inventario[nombre]
+    precios["precio"]=precio
+
+    print(inventario)
+
+
+def calcular_valor_inventario(inventario:dict):
+    res:int=0
+    for nombre in inventario:
+        print(nombre)
+        ropa=inventario[nombre]
+        precio=ropa["precio"]
+        cantidad=ropa["cantidad"]
+        valorNombre=precio*cantidad
+        res+=valorNombre
+
+    return res
+
+
+"""inventario.clear()
+
+agregar_producto(inventario, "Camisa", 20.0, 50)
+agregar_producto(inventario, "Pantal´on", 30.0, 30)
+actualizar_stock(inventario, "Camisa", 10)
+valor_total = calcular_valor_inventario(inventario)
+print("Valor total del inventario:", valor_total) # Deber´ıa imprimir 1300.00
+
+"""
+
+
+
+
